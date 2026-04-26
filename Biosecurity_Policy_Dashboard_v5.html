@@ -1,0 +1,240 @@
+
+<h2 class="sr-only">AI-enabled Biological Tool Policy Dashboard — governance coverage for protein engineering AI tools in the US and UK</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.tab-group{display:flex;border:0.5px solid var(--color-border-tertiary);border-radius:8px;overflow:hidden;background:var(--color-background-secondary)}
+.tab{padding:7px 18px;cursor:pointer;font-size:12px;border:none;background:transparent;color:var(--color-text-secondary);font-family:var(--font-sans);transition:all .15s;border-right:0.5px solid var(--color-border-tertiary)}
+.tab:last-child{border-right:none}
+.tab.on{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500}
+.pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:500;white-space:nowrap}
+.pill.strong{background:#EAF3DE;color:#27500A}
+.pill.partial{background:#FAEEDA;color:#633806}
+.pill.limited{background:#F1EFE8;color:#444441}
+.pill.none{background:#FCEBEB;color:#791F1F}
+.pill.revoked{background:#FCEBEB;color:#791F1F;text-decoration:line-through}
+.pill.acad{background:#E6F1FB;color:#0C447C}
+.pill.corp{background:#EEEDFE;color:#3C3489}
+.ins-row{display:grid;grid-template-columns:1fr 100px 70px;gap:8px;align-items:start;padding:10px 12px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
+.ins-row:last-child{border-bottom:none}
+.ins-row:hover{background:var(--color-background-secondary)}
+a{color:var(--color-text-info);text-decoration:none;font-size:11px}
+a:hover{text-decoration:underline}
+.metric{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px;flex:1;min-width:80px}
+</style>
+
+<div style="padding:0 0 20px">
+
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+  <div class="tab-group" id="ctabs">
+    <button class="tab on" data-c="US" onclick="setC(this)">United States</button>
+    <button class="tab" data-c="UK" onclick="setC(this)">United Kingdom</button>
+    <button class="tab" data-c="cmp" onclick="setC(this)">Compare US / UK</button>
+  </div>
+  <div style="display:flex;gap:6px;align-items:center">
+    <span style="font-size:10px;color:var(--color-text-tertiary)">Coverage:</span>
+    <span class="pill strong">Strong</span>
+    <span class="pill partial">Partial</span>
+    <span class="pill limited">Limited</span>
+    <span class="pill none">None</span>
+  </div>
+</div>
+
+<div id="main"></div>
+
+<div style="margin-top:12px;padding:8px 12px;border-radius:8px;border:0.5px solid var(--color-border-warning);background:var(--color-background-warning);font-size:11px;color:var(--color-text-secondary)">
+  <span style="color:var(--color-text-warning);font-weight:500">Research note.</span> Coverage ratings are preliminary assessments based on English-language public sources only. Not legal advice. Tool set cross-referenced from two EpochAI databases. v1 scope: protein engineering only.
+</div>
+</div>
+
+<script>
+const D={
+US:{
+  label:"United States",models:42,instruments:14,
+  headline:"Leading contributor to protein engineering AI development. Governance posture regressed following EO 14110 revocation (Jan 2025) with no biosecurity replacement issued.",
+  tools:[
+    {n:"ProteinGenerator",org:"University of Washington",type:"acad"},
+    {n:"JAM-2",org:"Nabla Bio",type:"corp"},
+    {n:"Proteina 200M (+15M triangle layers)",org:"NVIDIA",type:"corp"},
+    {n:"ProteinZero",org:"University of Illinois",type:"acad"},
+    {n:"Proteina 400M",org:"NVIDIA",type:"corp"},
+    {n:"Proteina 200M",org:"NVIDIA",type:"corp"},
+    {n:"RFAntibody",org:"University of Washington",type:"acad"},
+    {n:"Chai-2",org:"Chai Discovery",type:"corp"},
+    {n:"GPT-4b micro",org:"OpenAI",type:"corp"},
+    {n:"Germinal",org:"Stanford University",type:"acad"},
+    {n:"RFDiffusion2",org:"University of Washington",type:"acad"},
+    {n:"ProGen3 46B",org:"Profluent Bio",type:"corp"},
+    {n:"AF2Ring",org:"University of Missouri",type:"acad"},
+    {n:"CSDesign",org:"Brigham Young University",type:"acad"},
+    {n:"aSAMc",org:"Michigan State University",type:"acad"},
+    {n:"Deep Kernel Inversion (DKI)",org:"Nosis Bio",type:"corp"},
+    {n:"ClusPro Team protein–protein docking protocol",org:"Stony Brook University",type:"acad"},
+    {n:"ASR-Max",org:"Michigan State University",type:"acad"},
+    {n:"BindCraft",org:"University of Washington",type:"acad"},
+    {n:"Caliby",org:"Stanford University",type:"acad"},
+    {n:"AF3Score",org:"Stony Brook University/Boston University",type:"acad"},
+    {n:"BayesDesign",org:"Brigham Young University",type:"acad"},
+    {n:"AIDO.Protein-16B",org:"GenBio AI",type:"corp"},
+    {n:"AIDO.Protein-IFdiff",org:"GenBio AI",type:"corp"},
+    {n:"DFMDock",org:"MIT / Broad Institute",type:"acad"},
+    {n:"BaseFold",org:"Basecamp Research",type:"corp"},
+    {n:"ASR-Dist",org:"Michigan State University",type:"acad"},
+    {n:"LASErMPNN",org:"Harvard University",type:"acad"},
+    {n:"Metalic-AuxIF",org:"InstaDeep",type:"corp"},
+    {n:"EvoSeq-ML",org:"Michigan State University",type:"acad"},
+    {n:"Loop-Diffusion",org:"University of Washington",type:"acad"},
+    {n:"GenSLM",org:"California Institute of Technology",type:"acad"},
+    {n:"PRISM (str. enc. only)",org:"Carnegie Mellon University",type:"acad"},
+    {n:"PRISM",org:"Carnegie Mellon University",type:"acad"},
+    {n:"TENet",org:"Stanford University",type:"acad"},
+    {n:"β-GAN",org:"Georgia Institute of Technology",type:"acad"},
+    {n:"Stable FT-AF2",org:"University of California",type:"acad"},
+    {n:"Stable Structure-Split FT-AF2",org:"University of California",type:"acad"},
+    {n:"SuperWater",org:"Vanderbilt University",type:"acad"},
+    {n:"TrMRF",org:"MIT",type:"acad"},
+    {n:"structure-conditioned sequence generative model",org:"Generate Biomedicines",type:"corp"},
+    {n:"Twin Peaks",org:"Iowa State University",type:"acad"},
+  ],
+  frameworks:[
+    {name:"EO 14110 — Safe, Secure & Trustworthy AI",type:"Executive Order",cov:"none",note:"Directed OSTP/NIH to assess AI biosecurity risks. Revoked Jan 2025 by EO 14179. No biosecurity replacement issued.",url:"https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence",revoked:true},
+    {name:"EO 14179 — Removing Barriers to American Leadership in AI",type:"Executive Order",cov:"none",note:"Current operative EO. Reorients US AI policy toward removing regulatory barriers. No biosecurity provisions.",url:"https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence"},
+    {name:"America's AI Action Plan",type:"Official Policy",cov:"none",note:"Tied to EO 14179. Competitiveness-focused. No protein engineering governance provisions.",url:"https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf"},
+    {name:"OSTP Nucleic Acid Synthesis Screening Framework (Sep 2024)",type:"Official Policy",cov:"partial",note:"Most proximate instrument. Regulates synthesis providers downstream of AI model output — does not address AI-generated protein design upstream.",url:"https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf"},
+    {name:"HHS Screening Framework Guidance for Synthetic Nucleic Acids (Oct 2023)",type:"Federal Guidance",cov:"partial",note:"Applies at synthesis transaction, not at model output.",url:"https://www.federalregister.gov/documents/2023/10/13/2023-22540/screening-framework-guidance-for-providers-and-users-of-synthetic-nucleic-acids"},
+    {name:"NIH Notice NOT-OD-25-012 — OSTP Framework Adherence",type:"NIH Notice",cov:"partial",note:"Applies OSTP screening to NIH-funded procurements only.",url:"https://grants.nih.gov/grants/guide/notice-files/NOT-OD-25-012.html"},
+    {name:"NIH Guidelines — Recombinant or Synthetic Nucleic Acids (Apr 2024)",type:"NIH Guidelines",cov:"partial",note:"Governs recombinant nucleic acid research. AI-assisted protein design not explicitly within scope.",url:"https://osp.od.nih.gov/wp-content/uploads/NIH_Guidelines.pdf"},
+    {name:"USG Policy for Oversight of DURC and PEPP (May 2024)",type:"Official Policy",cov:"limited",note:"Anchored to listed agents and pre-AI research types. Does not create a trigger for AI-generated outputs.",url:"https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/05/USG-Policy-for-Oversight-of-DURC-and-PEPP.pdf"},
+    {name:"DURC and PEPP Implementation Guidance (May 2024)",type:"Official Policy",cov:"limited",note:"Implements USG DURC/PEPP policy. Same scope limitations.",url:"https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/05/USG-DURC-PEPP-Implementation-Guidance.pdf"},
+    {name:"15 CFR Part 774 — Commerce Control List (EAR)",type:"CFR Regulation",cov:"limited",note:"AI model weights and protein design software not listed as controlled items.",url:"https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-774"},
+    {name:"NIST AI RMF 1.0 (2023)",type:"NIST Framework",cov:"limited",note:"General AI risk framework. No biosecurity-specific controls. Bioscience sector playbook not published.",url:"https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10"},
+    {name:"NIST RFI — Safety Considerations for Chemical/Biological AI Models (Oct 2024)",type:"Federal RFI",cov:"limited",note:"First formal US acknowledgment that biological AI models need dedicated safety consideration. Still information-gathering.",url:"https://www.federalregister.gov/documents/2024/10/04/2024-22974/safety-considerations-for-chemical-andor-biological-ai-models"},
+    {name:"FDA Draft Guidance — AI-Enabled Device Software Functions",type:"FDA Guidance",cov:"limited",note:"Applies to medical AI devices only. Not applicable to research protein engineering tools.",url:"https://www.fda.gov/regulatory-information/search-fda-guidance-documents/artificial-intelligence-enabled-device-software-functions-lifecycle-management-and-marketing"},
+    {name:"California SB 53 — Large AI Developer Obligations",type:"State Legislation",cov:"limited",note:"State-level large developer obligations. Not biosecurity-specific.",url:"https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53"},
+  ]
+},
+UK:{
+  label:"United Kingdom",models:11,instruments:6,
+  headline:"Third-ranked contributor. Stronger strategic framing than the US — UK Biological Security Strategy explicitly names AI — but no binding regulatory instrument specific to protein engineering exists.",
+  tools:[
+    {n:"DynamicMPNN",org:"University of Cambridge",type:"acad"},
+    {n:"AlphaProteo",org:"Google Deepmind",type:"corp"},
+    {n:"CPDiffusion",org:"Cambridge University, Shanghai Jiao Tong University",type:"acad"},
+    {n:"AlphaProteo v1",org:"Google Deepmind",type:"corp"},
+    {n:"BAGEL",org:"Imperial College London",type:"acad"},
+    {n:"AbBFN",org:"InstaDeep",type:"corp"},
+    {n:"AbBFN+",org:"InstaDeep",type:"corp"},
+    {n:"BaseFold",org:"Basecamp Research",type:"corp"},
+    {n:"Metalic-AuxIF",org:"InstaDeep",type:"corp"},
+    {n:"ProtBFN",org:"InstaDeep",type:"corp"},
+    {n:"Zero-shot MSA Transformer",org:"Cambridge Consultants",type:"corp"},
+  ],
+  frameworks:[
+    {name:"UK Biological Security Strategy (2023)",type:"Official Policy",cov:"partial",note:"Explicitly names AI as a biosecurity consideration. Calls for assessment of AI tools enabling pathogen design. Binding rules still pending.",url:"https://assets.publishing.service.gov.uk/media/64b0a6285f7bb7000c7fd3d5/uk-biological-security-strategy.pdf"},
+    {name:"UK Biological Security Strategy Implementation Report (Jun 2023–Jun 2025)",type:"Official Policy",cov:"partial",note:"Confirms ongoing work. No binding regulatory outcomes for protein engineering specifically reported.",url:"https://www.gov.uk/government/publications/uk-biological-security-strategy-implementation-report-june-2023-to-june-2025"},
+    {name:"UK National AI Strategy",type:"Official Policy",cov:"limited",note:"Broad AI governance. No biosecurity-specific provisions or protein engineering risk categories.",url:"https://www.gov.uk/government/publications/national-ai-strategy"},
+    {name:"Code of Practice for Cyber Security of AI",type:"Official Policy",cov:"none",note:"Addresses security of AI systems, not biosecurity risks from AI outputs.",url:"https://www.gov.uk/government/publications/ai-cyber-security-code-of-practice/code-of-practice-for-the-cyber-security-of-ai"},
+    {name:"Seoul Declaration on AI Safety (2024)",type:"International Declaration",cov:"limited",note:"Non-binding commitment to CBRN risk cooperation. No implementation mechanism for protein engineering.",url:"https://www.gov.uk/government/publications/seoul-ministerial-statement-for-advancing-ai-safety-innovation-and-inclusivity-the-seoul-declaration"},
+    {name:"ISO 42001",type:"Technical Standard",cov:"limited",note:"General AI management system standard. No biosecurity-specific controls.",url:""},
+  ]
+}};
+
+const COVCOL={strong:"#639922",partial:"#BA7517",limited:"#888780",none:"#A32D2D"};
+let activeC="US";
+
+function setC(btn){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  activeC=btn.dataset.c;
+  render();
+}
+
+function metricRow(d,col){
+  return `<div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+    <div class="metric">
+      <div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:2px">Models identified</div>
+      <div style="font-size:20px;font-weight:500;color:${col}">${d.models}</div>
+    </div>
+    <div class="metric">
+      <div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:2px">Instruments reviewed</div>
+      <div style="font-size:20px;font-weight:500;color:${col}">${d.instruments}</div>
+    </div>
+    <div class="metric" style="flex:3;min-width:180px">
+      <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.6">${d.headline}</div>
+    </div>
+  </div>`;
+}
+
+function toolTable(cid){
+  const d=D[cid];
+  return `<div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px">
+    <div style="padding:8px 12px;border-bottom:0.5px solid var(--color-border-tertiary);display:grid;grid-template-columns:1fr 180px 80px 80px;gap:8px;font-size:10px;color:var(--color-text-tertiary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">
+      <span>Model</span><span>Institution / Organisation</span><span>Sector</span>
+    </div>
+    ${d.tools.map(t=>`<div style="display:grid;grid-template-columns:1fr 180px 80px 80px;gap:8px;padding:8px 12px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px;align-items:center">
+      <span style="font-weight:500;color:var(--color-text-primary)">${t.n}</span>
+      <span style="color:var(--color-text-secondary);font-size:11px">${t.org}</span>
+      <span class="pill ${t.type}">${t.type==='acad'?'Academic':'Corporate'}</span>
+    </div>`).join('')}
+  </div>`;
+}
+
+function frameworkTable(cid){
+  const d=D[cid];
+  return `<div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px">
+    <div style="padding:8px 12px;border-bottom:0.5px solid var(--color-border-tertiary);display:grid;grid-template-columns:1fr 100px 70px;gap:8px;font-size:10px;color:var(--color-text-tertiary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">
+      <span>Instrument</span><span>Type</span><span>Coverage</span>
+    </div>
+    ${d.frameworks.map(f=>`<div class="ins-row">
+      <div>
+        <div style="font-weight:500;color:${f.revoked?'var(--color-text-tertiary)':'var(--color-text-primary)'};margin-bottom:3px;font-size:12px;${f.revoked?'text-decoration:line-through':''}">${f.name}</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.5">${f.note}</div>
+        ${f.url?`<a href="${f.url}" target="_blank" rel="noopener" style="margin-top:4px;display:inline-block">↗ Primary source</a>`:''}
+      </div>
+      <div><span style="font-size:10px;padding:2px 7px;border-radius:100px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)">${f.type}</span></div>
+      <div><span class="pill ${f.revoked?'revoked':f.cov}">${f.revoked?'Revoked':f.cov.charAt(0).toUpperCase()+f.cov.slice(1)}</span></div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function gapBox(){
+  return `<div style="padding:10px 14px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-danger);background:var(--color-background-danger);margin-bottom:10px">
+    <div style="font-size:11px;font-weight:500;color:var(--color-text-danger);margin-bottom:5px">Structural gap — shared by both countries</div>
+    <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.7">No governance instrument in either jurisdiction creates an enforceable trigger point for AI-generated protein design outputs that precede physical material production. Existing controls are calibrated to physical agents, synthesis transactions, and pre-AI research categories. The most capable protein engineering tools operate entirely upstream of these trigger points.</div>
+  </div>`;
+}
+
+function sectionLabel(txt){
+  return `<div style="font-size:10px;font-weight:500;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px">${txt}</div>`;
+}
+
+function panelFor(cid){
+  const col=cid==='US'?'#185FA5':'#C0312F';
+  return metricRow(D[cid],col)+sectionLabel("Protein engineering models")+toolTable(cid)+sectionLabel("Governance instruments")+frameworkTable(cid);
+}
+
+function render(){
+  const el=document.getElementById('main');
+  if(activeC==='cmp'){
+    el.innerHTML=`
+      ${gapBox()}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div style="font-size:12px;font-weight:500;color:#185FA5;margin-bottom:8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">United States</div>
+          ${metricRow(D.US,'#185FA5')}
+          ${sectionLabel("Models")}${toolTable('US')}
+          ${sectionLabel("Instruments")}${frameworkTable('US')}
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:500;color:#C0312F;margin-bottom:8px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)">United Kingdom</div>
+          ${metricRow(D.UK,'#C0312F')}
+          ${sectionLabel("Models")}${toolTable('UK')}
+          ${sectionLabel("Instruments")}${frameworkTable('UK')}
+        </div>
+      </div>`;
+  } else {
+    el.innerHTML=gapBox()+panelFor(activeC);
+  }
+}
+
+render();
+</script>
